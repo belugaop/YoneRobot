@@ -108,7 +108,7 @@
     "ALLOW_EXCL": {
        "description": "Set this to True if you want ! to be a command prefix along with /. Recommended is True",
        "value": "True"
-    }
+    },
     "DATABASE_URI": {
         "description": "mongoDB URI. Get this value from https://www.mongodb.com. For more help watch this video - https://youtu.be/dsuTn4qV2GA",
         "required": true
@@ -129,6 +129,7 @@
     "BOT_TOKEN": {
             "description": "Your bot token.",
             "required": true     
+    }
     
  }
 }
