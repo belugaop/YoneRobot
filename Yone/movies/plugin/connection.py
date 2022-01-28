@@ -8,11 +8,11 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.ERROR)
 
 
-@Client.on_message((filters.private | filters.group) & filters.command('connect'))
+@Client.on_message((filters.private | filters.group) & filters.command('mconnect'))
 async def addconnection(client, message):
     userid = message.from_user.id if message.from_user else None
     if not userid:
-        return await message.reply(f"You are anonymous admin. Use /connect {message.chat.id} in PM")
+        return await message.reply(f"You are anonymous admin. Use /mconnect {message.chat.id} in PM")
     chat_type = message.chat.type
 
     if chat_type == "private":
@@ -79,15 +79,15 @@ async def addconnection(client, message):
         return
 
 
-@Client.on_message((filters.private | filters.group) & filters.command('disconnect'))
+@Client.on_message((filters.private | filters.group) & filters.command('dismconnect'))
 async def deleteconnection(client, message):
     userid = message.from_user.id if message.from_user else None
     if not userid:
-        return await message.reply(f"You are anonymous admin. Use /connect {message.chat.id} in PM")
+        return await message.reply(f"You are anonymous admin. Use /mconnect {message.chat.id} in PM")
     chat_type = message.chat.type
 
     if chat_type == "private":
-        await message.reply_text("Run /connections to view or disconnect from groups!", quote=True)
+        await message.reply_text("Run /mconnections to view or disconnect from groups!", quote=True)
 
     elif chat_type in ["group", "supergroup"]:
         group_id = message.chat.id
@@ -104,17 +104,17 @@ async def deleteconnection(client, message):
         if delcon:
             await message.reply_text("Successfully disconnected from this chat", quote=True)
         else:
-            await message.reply_text("This chat isn't connected to me!\nDo /connect to connect.", quote=True)
+            await message.reply_text("This movie chat isn't connected to me!\nDo /mconnect to connect.", quote=True)
 
 
-@Client.on_message(filters.private & filters.command(["connections"]))
+@Client.on_message(filters.private & filters.command(["mconnections"]))
 async def connections(client, message):
     userid = message.from_user.id
 
     groupids = await all_connections(str(userid))
     if groupids is None:
         await message.reply_text(
-            "There are no active connections!! Connect to some groups first.",
+            "There are no active connections!! Connect to some movie groups first.",
             quote=True
         )
         return
@@ -142,6 +142,6 @@ async def connections(client, message):
         )
     else:
         await message.reply_text(
-            "There are no active connections!! Connect to some groups first.",
+            "There are no active connections!! Connect to some movie groups first.",
             quote=True
         )
